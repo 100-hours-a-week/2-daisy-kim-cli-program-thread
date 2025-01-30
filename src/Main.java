@@ -1,5 +1,8 @@
+import services.BankSystem;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        BankSystem bank = new BankSystem();
+        bank.start();
     }
 }
