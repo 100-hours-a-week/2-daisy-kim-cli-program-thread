@@ -1,7 +1,7 @@
 package models;
 
 public class Account {
-    private User owner;  // ✅ `private`으로 변경하여 직접 접근 방지
+    protected User owner;
     protected String accountNumber;
     protected double balance;
 
@@ -29,7 +29,6 @@ public class Account {
         System.out.println(owner.getName() + "님의 현재 잔액: " + balance + "원");
     }
 
-    // ✅ 안전한 getter 추가 (BankService에서 사용)
     public User getOwner() {
         return owner;
     }

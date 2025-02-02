@@ -7,13 +7,12 @@ public class BankService {
     private boolean isLoggedIn;
 
     public BankService() {
-        User user = new User("김다은", "daisy", "password");
+        User user = new User("김다은", "daisy", "1234");
         this.userAccount = new PremiumAccount(user, "010-123-456");
         this.isLoggedIn = false;
     }
 
     public boolean login(String userId, String password) {
-        // ✅ `getOwner()` 메서드를 사용하여 owner에 접근
         if (userAccount.getOwner().login(userId, password)) {
             isLoggedIn = true;
             System.out.println("✅ 로그인 성공! 환영합니다, " + userAccount.getOwner().getName() + "님.");
