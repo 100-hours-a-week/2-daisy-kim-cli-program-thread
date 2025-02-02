@@ -18,8 +18,4 @@ public class User {
     public boolean login(String userId, String password) {
         return this.userId.equals(userId) && this.password.equals(password);
     }
-
-    public void logout() {
-        System.out.println(name + "님이 로그아웃했습니다.");
-    }
 }
