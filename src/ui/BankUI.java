@@ -37,12 +37,12 @@ public class BankUI {
                     break;
                 case "2":
                     System.out.print("💰 입금할 금액: ");
-                    bankService.deposit(scanner.nextDouble());
+                    bankService.deposit(scanner.nextInt());
                     scanner.nextLine();
                     break;
                 case "3":
                     System.out.print("💸 출금할 금액: ");
-                    bankService.withdraw(scanner.nextDouble());
+                    bankService.withdraw(scanner.nextInt());
                     scanner.nextLine();
                     break;
                 case "4":

@@ -23,7 +23,7 @@ public class BankService {
         }
     }
 
-    public void deposit(double amount) {
+    public void deposit(int amount) {
         if (isLoggedIn) {
             userAccount.deposit(amount);
         } else {
@@ -31,7 +31,7 @@ public class BankService {
         }
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(int amount) {
         if (isLoggedIn) {
             userAccount.withdraw(amount);
         } else {

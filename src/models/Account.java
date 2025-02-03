@@ -3,7 +3,7 @@ package models;
 public class Account {
     protected User owner;
     protected String accountNumber;
-    protected double balance;
+    protected int balance;
 
     public Account(User owner, String accountNumber) {
         this.owner = owner;
@@ -11,12 +11,12 @@ public class Account {
         this.balance = 0;
     }
 
-    public void deposit(double amount) {
+    public void deposit(int amount) {
         balance += amount;
         System.out.println(amount + "원이 입금되었습니다. 현재 잔액: " + balance + "원");
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(int amount) {
         if (balance >= amount) {
             balance -= amount;
             System.out.println(amount + "원이 출금되었습니다. 현재 잔액: " + balance + "원");

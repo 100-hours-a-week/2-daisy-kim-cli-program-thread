@@ -6,7 +6,7 @@ public class AccountHolder extends Account {
         super(owner, accountNumber);
     }
 
-    public void transfer(AccountHolder toAccount, double amount) {
+    public void transfer(AccountHolder toAccount, int amount) {
         if (balance >= amount) {
             balance -= amount;
             toAccount.deposit(amount);
