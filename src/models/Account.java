@@ -32,4 +32,12 @@ public class Account {
     public User getOwner() {
         return owner;
     }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 }
