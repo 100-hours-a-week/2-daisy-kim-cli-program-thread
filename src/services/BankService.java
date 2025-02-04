@@ -89,8 +89,6 @@ public class BankService {
             return;
         }
 
-        userAccount.withdraw(amount);
-
-        System.out.println("💸 " + amount + "원이 " + friendId + "님에게 송금되었습니다.");
+        ((AccountHolder) userAccount).transfer(null, amount);
     }
 }
