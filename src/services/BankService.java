@@ -92,6 +92,5 @@ public class BankService {
         userAccount.withdraw(amount);
 
         System.out.println("💸 " + amount + "원이 " + friendId + "님에게 송금되었습니다.");
-        System.out.println("📌 현재 잔액: " + userAccount.getBalance() + "원");
     }
 }
