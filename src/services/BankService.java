@@ -1,94 +1,70 @@
 package services;
-
-import models.*;
+import models.AccountHolder;
 
 public class BankService {
-    private Account userAccount;
-    private boolean isLoggedIn;
+    private UserService userService;
+    private AccountService accountService;
+    private AccountHolder account;
 
     public BankService() {
-        User user = new User("김다은", "daisy", "1234");
-        this.userAccount = new AccountHolder(user, "010-123-456");
-        this.isLoggedIn = false;
-    }
-
-    public boolean login(String userId, String password) {
-        if (userAccount.getOwner().login(userId, password)) {
-            isLoggedIn = true;
-            System.out.println("✅ 로그인 성공! 환영합니다, " + userAccount.getOwner().getName() + "님.");
-            return true;
-        } else {
-            System.out.println("❌ 로그인 실패! 아이디 또는 비밀번호가 잘못되었습니다.");
-            return false;
-        }
+        this.userService = new UserService();
+        this.account = new AccountHolder(userService.getUser(), "010-123-456");
+        this.accountService = new AccountService(account);
     }
 
     public boolean isLoggedIn() {
-        return isLoggedIn;
+        return userService.isLoggedIn();
+    }
+
+    public void login(String userId, String password) {
+        userService.login(userId, password);
     }
 
     public void deposit(int amount) {
-        if (isLoggedIn) {
-            userAccount.deposit(amount);
-            checkAndUpgradeAccount();
-        } else {
+        if (!isLoggedIn()) {
             System.out.println("🔑 로그인 후 이용 가능합니다.");
+            return;
         }
-    }
-
-    public void checkAndUpgradeAccount() {
-        if (userAccount instanceof AccountHolder && userAccount.getBalance() >= 1000000) {
-            User currentUser = userAccount.getOwner();
-            userAccount = new PremiumAccount(currentUser, userAccount.getAccountNumber());
-            System.out.println("🎉 축하합니다! 프리미엄 계좌로 자동 전환되었습니다.");
-        }
+        accountService.deposit(amount);
     }
 
     public void withdraw(int amount) {
-        if (isLoggedIn) {
-            userAccount.withdraw(amount);
-        } else {
+        if (!isLoggedIn()) {
             System.out.println("🔑 로그인 후 이용 가능합니다.");
+            return;
         }
+        accountService.withdraw(amount);
     }
 
     public void checkBalance() {
-        if (isLoggedIn) {
-            userAccount.checkBalance();
-        } else {
+        if (!isLoggedIn()) {
             System.out.println("🔑 로그인 후 이용 가능합니다.");
+            return;
         }
+        accountService.checkBalance();
     }
 
     public void viewPremiumBenefits() {
-        if (!isLoggedIn) {
+        if (!isLoggedIn()) {
             System.out.println("🔑 로그인 후 이용 가능합니다.");
             return;
         }
-
-        if (userAccount instanceof PremiumAccount) {
-            ((PremiumAccount) userAccount).showBenefits();
-        } else {
-            System.out.println("❌ 일반 계좌는 프리미엄 혜택을 볼 수 없습니다.");
-        }
+        accountService.viewPremiumBenefits();
     }
 
     public void sendToFriends(String friendId, int amount) {
-        if (!isLoggedIn) {
+        if (!isLoggedIn()) {
             System.out.println("🔑 로그인 후 이용 가능합니다.");
             return;
         }
 
-        if (!(userAccount instanceof AccountHolder)) {
-            System.out.println("❌ 해당 계좌에서는 송금 기능을 사용할 수 없습니다.");
-            return;
-        }
-
-        if (userAccount.getBalance() < amount) {
+        if (account.getBalance() < amount) {
             System.out.println("❌ 잔액이 부족하여 송금할 수 없습니다.");
             return;
         }
 
-        ((AccountHolder) userAccount).transfer(null, amount);
+        account.withdraw(amount);
+        System.out.println("💸 " + amount + "원이 '" + friendId + "'님에게 송금되었습니다.");
+        System.out.println("📌 현재 잔액: " + account.getBalance() + "원");
     }
 }
