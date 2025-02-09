@@ -58,13 +58,6 @@ public class BankService {
             return;
         }
 
-        if (account.getBalance() < amount) {
-            System.out.println("❌ 잔액이 부족하여 송금할 수 없습니다.");
-            return;
-        }
-
-        account.withdraw(amount);
-        System.out.println("💸 " + amount + "원이 '" + friendId + "'님에게 송금되었습니다.");
-        System.out.println("📌 현재 잔액: " + account.getBalance() + "원");
+        accountService.sendToFriends(friendId, amount);
     }
 }

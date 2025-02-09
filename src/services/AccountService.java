@@ -31,13 +31,19 @@ public class AccountService {
         account.checkBalance();
     }
 
-    public void sendToFriends(AccountHolder receiver, int amount) {
+    public void sendToFriends(String friendId, int amount) {
         if (account.getBalance() < amount) {
             System.out.println("❌ 잔액이 부족하여 송금할 수 없습니다.");
             return;
         }
-        ((AccountHolder) account).transfer(receiver, amount);
-        System.out.println("💸 " + amount + "원이 " + receiver.getOwner().getName() + "님에게 송금되었습니다.");
+
+        if (account instanceof AccountHolder) {
+            ((AccountHolder) account).transfer(null, amount);
+            System.out.println("💸 " + amount + "원이 '" + friendId + "'님에게 송금되었습니다.");
+            System.out.println("📌 현재 잔액: " + account.getBalance() + "원");
+        } else {
+            System.out.println("❌ 이 계좌에서는 송금을 사용할 수 없습니다.");
+        }
     }
 
     public void viewPremiumBenefits() {
