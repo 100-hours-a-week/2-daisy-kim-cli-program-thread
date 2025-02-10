@@ -22,7 +22,7 @@ public class BankUI {
         }
 
         while (true) {
-            System.out.println("\n1️⃣ 로그인\n2️⃣ 입금\n3️⃣ 출금\n4️⃣ 잔액 조회\n5️⃣ 프리미엄 혜택 보기\n6️⃣ 송금\n7️⃣ 종료");
+            System.out.println("\n1️⃣ 로그인\n2️⃣ 입금\n3️⃣ 출금\n4️⃣ 잔액 조회\n5️⃣ 프리미엄 혜택 보기\n6️⃣ 송금\n7️⃣ 환율 조회\n8️⃣ 종료");
             System.out.print("👆🏻 선택: ");
             String choice = scanner.nextLine();
 
@@ -73,10 +73,14 @@ public class BankUI {
                     bankService.sendToFriends(friendId, amount);
                     break;
                 case "7":
+                    bankService.getExchangeRate();
+                    break;
+                case "8":
                     System.out.println("---------------------------------");
                     System.out.println("\n\t   방문해주셔서 감사합니다!");
                     System.out.println("\t\t좋은 하루 되세요 :)\n");
                     System.out.println("---------------------------------");
+                    bankService.stopExchangeRateThread(); // 스레드 중지
                     scanner.close();
                     return;
                 default:

@@ -1,15 +1,19 @@
 package services;
 import models.AccountHolder;
+import java.util.Random;
 
 public class BankService {
     private UserService userService;
     private AccountService accountService;
     private AccountHolder account;
+    private ExchangeRateThread exchangeRateThread;
 
     public BankService() {
         this.userService = new UserService();
         this.account = new AccountHolder(userService.getUser(), "010-123-456");
         this.accountService = new AccountService(account);
+        this.exchangeRateThread = new ExchangeRateThread();
+        this.exchangeRateThread.start();
     }
 
     public boolean isLoggedIn() {
@@ -59,5 +63,13 @@ public class BankService {
         }
 
         accountService.sendToFriends(friendId, amount);
+    }
+
+    public void getExchangeRate() {
+        System.out.printf("💱 현재 환율: %.2f 원/USD\n", exchangeRateThread.getExchangeRate());
+    }
+
+    public void stopExchangeRateThread() {
+        exchangeRateThread.stopUpdating();
     }
 }
