@@ -66,10 +66,7 @@ public class BankService {
     }
 
     public void getExchangeRate() {
-        System.out.printf("💱 현재 환율: %.2f 원/USD\n", exchangeRateThread.getExchangeRate());
-    }
-
-    public void stopExchangeRateThread() {
-        exchangeRateThread.stopUpdating();
+        Thread exchangeRateThread = new ExchangeRateThread();
+        exchangeRateThread.start();
     }
 }

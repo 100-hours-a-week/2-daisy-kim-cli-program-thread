@@ -80,7 +80,6 @@ public class BankUI {
                     System.out.println("\n\t   방문해주셔서 감사합니다!");
                     System.out.println("\t\t좋은 하루 되세요 :)\n");
                     System.out.println("---------------------------------");
-                    bankService.stopExchangeRateThread(); // 스레드 중지
                     scanner.close();
                     return;
                 default:
