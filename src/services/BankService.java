@@ -1,6 +1,5 @@
 package services;
 import models.AccountHolder;
-import java.util.Random;
 
 public class BankService {
     private UserService userService;
@@ -61,12 +60,14 @@ public class BankService {
             System.out.println("🔑 로그인 후 이용 가능합니다.");
             return;
         }
-
         accountService.sendToFriends(friendId, amount);
     }
 
     public void getExchangeRate() {
-        Thread exchangeRateThread = new ExchangeRateThread();
-        exchangeRateThread.start();
+        System.out.printf("💱 현재 환율: %.2f 원/USD\n", exchangeRateThread.getExchangeRate());
+    }
+
+    public void stopExchangeRateThread() {
+        exchangeRateThread.stopUpdating();
     }
 }

@@ -3,16 +3,28 @@ package services;
 import java.util.Random;
 
 public class ExchangeRateThread extends Thread {
-    private double exchangeRate;
-
-    public ExchangeRateThread() {
-        this.exchangeRate = 1300.0;
-    }
+    private double exchangeRate = 1300.0;
+    private boolean running = true;
 
     public void run() {
         Random random = new Random();
-        double change = (random.nextDouble() - 0.5) * 10;
-        exchangeRate += change;
-        System.out.printf("💱 현재 환율: %.2f 원/USD\n", exchangeRate);
+        while (running) {
+            try {
+                Thread.sleep(2000);
+                double change = (random.nextDouble() - 0.5) * 10;
+                exchangeRate += change;
+            } catch (InterruptedException e) {
+                System.out.println("환율 업데이트 중단");
+                break;
+            }
+        }
+    }
+
+    public double getExchangeRate() {
+        return exchangeRate;
+    }
+
+    public void stopUpdating() {
+        running = false;
     }
 }
