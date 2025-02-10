@@ -1,11 +1,13 @@
 package services;
 import models.AccountHolder;
+import java.util.List;
 
 public class BankService {
     private UserService userService;
     private AccountService accountService;
     private AccountHolder account;
     private ExchangeRateThread exchangeRateThread;
+    private InterestCalculatorThread interestThread;
 
     public BankService() {
         this.userService = new UserService();
@@ -69,5 +71,23 @@ public class BankService {
 
     public void stopExchangeRateThread() {
         exchangeRateThread.stopUpdating();
+    }
+
+    public BankService(List<AccountHolder> accounts) {
+        this.userService = new UserService();
+        this.account = accounts.get(0);
+        this.accountService = new AccountService(account);
+        this.exchangeRateThread = new ExchangeRateThread();
+        this.exchangeRateThread.start();
+
+        // 중복 실행 방지
+        if (interestThread == null) {
+            interestThread = new InterestCalculatorThread(accounts);
+            interestThread.start();
+        }
+    }
+
+    public void stopInterestCalculator() {
+        interestThread.stopCalculator();
     }
 }

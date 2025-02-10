@@ -1,5 +1,9 @@
 package ui;
 import services.BankService;
+import models.AccountHolder;
+import models.User;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BankUI {
@@ -9,7 +13,12 @@ public class BankUI {
 
     public BankUI() {
         this.scanner = new Scanner(System.in);
-        this.bankService = new BankService();
+
+
+        List<AccountHolder> accounts = new ArrayList<>();
+        accounts.add(new AccountHolder(new User("김다은", "daisy", "1234"), "010-1234-5678"));
+
+        this.bankService = new BankService(accounts);
     }
 
     public void start() {
@@ -81,6 +90,7 @@ public class BankUI {
                     System.out.println("\t\t좋은 하루 되세요 :)\n");
                     System.out.println("---------------------------------");
                     bankService.stopExchangeRateThread();
+                    bankService.stopInterestCalculator();
                     scanner.close();
                     return;
                 default:
